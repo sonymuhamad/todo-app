@@ -1,0 +1,9 @@
+.idea
+.env
+bin
+upload
+deploy/_output
+log
+.DS_Store
+cover.out
+dump.rdb%
