@@ -14,6 +14,8 @@ func InitializeHttpServer() *echo.Echo {
 	wire.Build(
 		pkg.LoadEnvConfig,
 		provideGormSQLDatabase,
+		provideTranslator,
+		provideValidator,
 		provideRepository,
 		provideUsecase,
 		httpserver.NewHandlerWithWire,
