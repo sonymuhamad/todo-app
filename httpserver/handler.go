@@ -29,5 +29,21 @@ func (h *Handler) GetUserByID(ctx echo.Context) error {
 		return err
 	}
 
-	return ctx.String(http.StatusOK, user.Name)
+	return ctx.JSON(http.StatusOK, user)
+}
+
+func (h *Handler) CreateUser(c echo.Context) error {
+	var user usecaseInterface.CreateUserParam
+	ctx := context.Background()
+
+	if err := c.Bind(&user); err != nil {
+		return c.String(http.StatusBadRequest, "bad request")
+	}
+
+	err := h.userUsecase.Create(ctx, user)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusCreated, "Success create user")
 }

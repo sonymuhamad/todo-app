@@ -20,7 +20,9 @@ func InitializeHttpServer() *echo.Echo {
 	envConfig := pkg.LoadEnvConfig()
 	db := provideGormSQLDatabase(envConfig)
 	user := repository.NewUser(db)
-	usecaseUser := usecase.NewUser(user)
+	translator := provideTranslator()
+	validate := provideValidator(translator)
+	usecaseUser := usecase.NewUser(user, validate)
 	handler := httpserver.NewHandlerWithWire(usecaseUser)
 	echoEcho := provideHttpServer(envConfig, handler)
 	return echoEcho
